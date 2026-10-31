@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "plugin.schema.json",
+  "title": "AI Infra Index plugin entry",
+  "description": "One file per plugin under plugins/<id>.yaml. This is the canonical record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "id",
+    "kind",
+    "repo",
+    "package",
+    "summary",
+    "category",
+    "stages",
+    "status",
+    "license",
+    "install",
+    "compat",
+    "evidence",
+    "maintainers"
+  ],
+  "properties": {
+    "schema": {
+      "const": 1,
+      "description": "Entry schema version. Breaking changes bump the major registry version."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Stable slug. Decoupled from repo/package names; renames go through aliases."
+    },
+    "kind": {
+      "enum": ["plugin", "library"],
+      "description": "DSH plugin (installable via dsh plugin add) or a library consumed by plugins."
+    },
+    "collection": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "default": "ai-infra",
+      "description": "Reserved for future multi-index support. First version is always ai-infra."
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^https://github\\.com/[^\\s]+$",
+      "description": "Public source repository."
+    },
+    "package": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Package name as declared in the repo's package.json."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One sentence for README and site listings."
+    },
+    "category": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Must exist in taxonomy.yaml."
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+      "description": "Lifecycle stages covered. Must exist in taxonomy.yaml."
+    },
+    "order": {
+      "type": "integer",
+      "description": "Optional display order within a category; lower first. Default 100."
+    },
+    "status": {
+      "enum": ["experimental", "stable", "deprecated"],
+      "description": "Maturity. Staleness is an operational signal, not a status."
+    },
+    "license": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9.+-]+$",
+      "description": "SPDX license identifier."
+    },
+    "install": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One copy-paste shell block. For stable entries it must be a single command."
+    },
+    "install_note": {
+      "type": "string",
+      "description": "Optional caveat, e.g. not yet on npm."
+    },
+    "compat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dsh": { "type": "string", "description": "DSH semver range, e.g. >=0.2.0 <0.3.0." },
+        "node": { "type": "string", "description": "Node semver range." },
+        "os": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["linux", "macos", "windows"] }
+        },
+        "backends": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" },
+          "description": "Serving/training backends this entry was verified against."
+        },
+        "requires": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["gpu", "cuda", "docker", "network", "disk"] }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proves", "fails", "url", "verified_at", "verified_by"],
+      "properties": {
+        "proves": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the entry demonstrates, in one line."
+        },
+        "fails": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What happens when the proof does not hold (degrade, rollback, refuse)."
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https?://[^\\s]+$",
+          "description": "Deep link to the verification section or report, not the repo root."
+        },
+        "verified_at": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date the maintainer last ran the gate. Not a file mtime."
+        },
+        "verified_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "xiciyang for maintainer-verified; future community entries use community:<handle>."
+        }
+      }
+    },
+    "maintainers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "superseded_by": {
+      "type": ["string", "null"],
+      "description": "Required for deprecated entries when a replacement exists."
+    },
+    "aliases": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Old ids, repo names, or package names kept for rename safety."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+schema: 1
+id: inference-serving
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/inference-serving
+package: "@xiciyang/inference-serving"
+summary: 探测环境 → 选后端 → 部署 → 三段健康检查 → 注册；失败时逐级降级并回滚。
+category: serving
+stages: [probe, deploy, verify, rollback]
+status: stable
+license: MIT
+install: "dsh plugin --profile <name> add @xiciyang/inference-serving"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20.11.0"
+  os: [linux, macos]
+  backends: [vllm]
+  requires: [gpu, docker, network]
+evidence:
+  proves: 端点可达 + 三段健康检查
+  fails: 内存→并发→精度→端口逐级降级，最后回滚
+  url: "https://github.com/xiciyang/inference-serving#健康检查三关"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

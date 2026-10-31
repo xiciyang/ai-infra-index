@@ -1,0 +1,64 @@
+name: "Plugin proposal / 新插件提案"
+description: "提议把一个新插件收进索引"
+title: "[plugin] "
+labels: ["plugin-proposal"]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: 仓库地址
+      placeholder: "https://github.com/xiciyang/..."
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 分类
+      options:
+        - serving
+        - quantization
+        - tuning
+        - diagnosis
+        - training
+        - primitives
+    validations:
+      required: true
+  - type: textarea
+    id: proves
+    attributes:
+      label: 它证明什么
+      description: 可判定的结果，不是形容词。
+    validations:
+      required: true
+  - type: textarea
+    id: fails
+    attributes:
+      label: 失败怎么退
+      description: 降级 / 回滚 / 报错，哪个顺序？
+    validations:
+      required: true
+  - type: input
+    id: install
+    attributes:
+      label: 安装命令
+      description: stable 必须是一条单行命令。
+    validations:
+      required: true
+  - type: input
+    id: license
+    attributes:
+      label: License
+      placeholder: "MIT / Apache-2.0 / BSD-3-Clause"
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: 收录规则
+      options:
+        - label: 有自动化测试或 contract
+          required: true
+        - label: evidence 链接指向验证章节，不是 repo 根
+          required: true
+        - label: 不含客户名、内网地址或私有数据
+          required: true

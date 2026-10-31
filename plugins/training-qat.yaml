@@ -1,0 +1,28 @@
+schema: 1
+id: training-qat
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/training-qat
+package: "@xiciyang/training-qat"
+summary: 量化感知训练；产出的 checkpoint 能被量化流程直接消费，并拒绝把「看起来没掉点」当成验收通过。
+category: training
+stages: [quantize, train, verify, rollback]
+order: 30
+status: stable
+license: BSD-3-Clause
+install: "dsh plugin add github:xiciyang/training-qat"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [transformers, peft, accelerate]
+  requires: [gpu, docker]
+evidence:
+  proves: checkpoint 可被量化流程消费 + 拒收假通过
+  fails: 量化消费或精度门禁不成立即回退
+  url: "https://github.com/xiciyang/training-qat#测试"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

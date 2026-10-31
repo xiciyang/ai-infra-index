@@ -1,0 +1,23 @@
+{
+  "name": "ai-infra-index",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A verified index of DeepSeek Harness AI infrastructure plugins and primitives.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify.mjs",
+    "verify:links": "node scripts/verify.mjs --links",
+    "new": "node scripts/new.mjs",
+    "stale": "node scripts/stale.mjs",
+    "stale:report": "node scripts/stale.mjs --write .stale-report.md"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "yaml": "^2.9.1"
+  }
+}

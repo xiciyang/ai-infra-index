@@ -1,0 +1,28 @@
+schema: 1
+id: training-pretrain
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/training-pretrain
+package: "@xiciyang/training-pretrain"
+summary: 继续预训练；语料切成确定性分片，并对权重真的变了、格式没有崩两件事分别取证。
+category: training
+stages: [train, verify, rollback]
+order: 40
+status: stable
+license: BSD-3-Clause
+install: "dsh plugin add github:xiciyang/training-pretrain"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [transformers, accelerate]
+  requires: [gpu, docker]
+evidence:
+  proves: 权重真的变了 + 格式没有崩
+  fails: 任一项不成立即回退
+  url: "https://github.com/xiciyang/training-pretrain#测试"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

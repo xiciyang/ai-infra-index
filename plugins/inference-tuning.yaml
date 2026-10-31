@@ -1,0 +1,28 @@
+schema: 1
+id: inference-tuning
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/inference-tuning
+package: "@xiciyang/inference-tuning"
+summary: 先做根因墙诊断，再匹配唯一的 TOP1 干预，双闭环验证；分子分母只认本机实测。
+category: tuning
+stages: [diagnose, tune, verify, rollback]
+status: stable
+license: Apache-2.0
+install: "git clone https://github.com/xiciyang/inference-tuning.git && cd inference-tuning && npm pack && dsh plugin --profile <name> add ./xiciyang-inference-tuning-0.1.0.tgz"
+install_note: 尚未发布到 npm；这是一条可复制的源码安装路径。
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [vllm]
+  requires: [gpu, docker]
+evidence:
+  proves: 双闭环验证 + 分子分母只认本机实测
+  fails: 规格书峰值硬拒绝，失败自动回退
+  url: "https://github.com/xiciyang/inference-tuning#精度回归契约"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

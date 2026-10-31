@@ -1,0 +1,58 @@
+name: "Task / 客户任务"
+description: "一个有验收判据与回退路径的交付任务（敏感信息请放私有仓）"
+title: "[task] "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        公开 issue 里不要写客户名、合同信息、内网地址、私有数据。
+        需要带客户上下文的任务，请在私有仓/Project 里建卡，这里只留脱敏版本。
+  - type: input
+    id: context
+    attributes:
+      label: 场景 / 客户（脱敏）
+      placeholder: "某推理交付：单卡部署 7B 模型"
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: 现状
+      description: 现在卡在哪一步？已经试过什么？
+    validations:
+      required: true
+  - type: textarea
+    id: gate
+    attributes:
+      label: 验收判据
+      description: 什么结果算完成？要可判定，不要「性能更好」。
+      placeholder: "端点可达 + 三段健康检查通过 + 真实吞吐 ≥ X"
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: 回退
+      description: 判据不成立时怎么退？
+    validations:
+      required: true
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: 交付物
+      description: 配置 / 报告 / 插件条目 / 证据链接
+    validations:
+      required: true
+  - type: input
+    id: plugin
+    attributes:
+      label: 关联插件
+      placeholder: "inference-serving / 无"
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私
+      options:
+        - label: 这条 issue 不含客户名、合同、内网地址或私有数据
+          required: true

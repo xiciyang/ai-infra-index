@@ -1,0 +1,25 @@
+schema: 1
+id: ai-infra-core
+kind: library
+collection: ai-infra
+repo: https://github.com/xiciyang/ai-infra-core
+package: "@xiciyang/ai-infra-core"
+summary: 七个零依赖原语：测量有效性、无泄漏切分、审计链、沙箱探针；证明不成立时报错，不返回数字。
+category: primitives
+stages: [verify]
+status: stable
+license: BSD-3-Clause
+install: "git clone https://github.com/xiciyang/ai-infra-core.git"
+compat:
+  node: ">=20"
+  os: [linux, macos]
+  requires: []
+evidence:
+  proves: 测量有效性 / 无泄漏切分 / 审计链可复算
+  fails: 证明不成立时抛错，不返回数字
+  url: "https://github.com/xiciyang/ai-infra-core#run-the-contracts"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

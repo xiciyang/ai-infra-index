@@ -1,0 +1,28 @@
+schema: 1
+id: training-sft
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/training-sft
+package: "@xiciyang/training-sft"
+summary: LoRA 监督微调；数据准备、训练、合并、验收、回退各自留下哈希链与机器可读报告。
+category: training
+stages: [train, verify, rollback]
+order: 10
+status: stable
+license: BSD-3-Clause
+install: "dsh plugin add github:xiciyang/training-sft"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [transformers, peft, trl, accelerate]
+  requires: [gpu, docker]
+evidence:
+  proves: 数据 / 训练 / 合并 / 验收 / 回退哈希链
+  fails: 任一阶段验收不成立即回退
+  url: "https://github.com/xiciyang/training-sft#测试"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

@@ -1,0 +1,36 @@
+name: "Bug / 条目或站点问题"
+description: "索引数据、生成器或站点展示的问题"
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: 位置
+      placeholder: "plugins/inference-serving.yaml / /open-source/ / 生成脚本"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现
+      description: 命令、输出、截图（不要贴 token）
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私
+      options:
+        - label: 不含客户名、合同、内网地址、token 或私有数据
+          required: true

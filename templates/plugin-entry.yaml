@@ -1,0 +1,33 @@
+# Copy to plugins/<id>.yaml, or run:
+#   npm run new -- --id <id> --category <category>
+#
+# Replace every TODO before running `npm run verify`.
+schema: 1
+id: example-plugin
+kind: plugin              # plugin | library
+collection: ai-infra
+repo: https://github.com/xiciyang/example-plugin
+package: "@xiciyang/example-plugin"
+summary: 一句话说明它替谁解决哪一步。
+category: serving         # must exist in taxonomy.yaml
+stages: [verify]          # probe/deploy/quantize/tune/train/diagnose/verify/rollback/observe
+order: 100                # optional, lower first within category
+status: experimental      # experimental | stable | deprecated
+license: MIT
+install: "dsh plugin --profile <name> add @xiciyang/example-plugin"
+install_note: ""          # optional; required for multi-step experimental installs
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: []
+  requires: []
+evidence:
+  proves: 可判定的结果，不是形容词。
+  fails: 证明不成立时怎么退（降级 / 回滚 / 报错）。
+  url: "https://github.com/xiciyang/example-plugin#测试"
+  verified_at: "TODO"      # 改成你真正重跑判据的日期
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

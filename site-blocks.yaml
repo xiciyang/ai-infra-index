@@ -1,0 +1,64 @@
+blocks:
+  - id: inference
+    type: os-group
+    data:
+      title: 推理交付
+      note: 从把模型装起来，到量化、调优、排障 —— 四步各一件，每件都守着同一条底线：数字要成立。
+      items:
+        - name: inference-serving
+          repo: https://github.com/xiciyang/inference-serving
+          meta: MIT · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 探测环境 → 选后端 → 部署 → 三段健康检查 → 注册；失败时逐级降级并回滚。判据：端点可达 + 三段健康检查；失败：内存→并发→精度→端口逐级降级，最后回滚。
+          install: dsh plugin --profile <name> add @xiciyang/inference-serving
+        - name: inference-quantization
+          repo: https://github.com/xiciyang/inference-quantization
+          meta: MIT · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 在容器里做 PTQ（默认 AWQ + INT4），精度退化与真实吞吐是两道独立验收，通过才标记 verified。判据：精度退化与真实吞吐两道独立验收；失败：按精度档位降级，不把「看起来没掉点」当通过。
+          install: dsh plugin --profile <name> add github:xiciyang/inference-quantization
+        - name: inference-tuning
+          repo: https://github.com/xiciyang/inference-tuning
+          meta: Apache-2.0 · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 先做根因墙诊断，再匹配唯一的 TOP1 干预，双闭环验证；分子分母只认本机实测。判据：双闭环验证 + 分子分母只认本机实测；失败：规格书峰值硬拒绝，失败自动回退。
+          install: git clone https://github.com/xiciyang/inference-tuning.git && cd inference-tuning && npm pack && dsh plugin --profile <name> add ./xiciyang-inference-tuning-0.1.0.tgz
+        - name: inference-diagnose
+          repo: https://github.com/xiciyang/inference-diagnose
+          meta: BSD-3-Clause · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 生成脱敏采集脚本 → 离线解析 → 给出带反证条件的原因排序；修不好时只补采缺失的探针。判据：带反证条件的原因排序；失败：只补采缺失的探针，不把整轮证据重跑一遍。
+          install: git clone https://github.com/xiciyang/inference-diagnose.git && cd inference-diagnose && bash scripts/build.sh && dsh plugin --profile <name> add .
+  - id: training
+    type: os-group
+    data:
+      title: 训练
+      note: 真实 GPU 上的四段训练。每段都要求可被证伪的证据，而不是「loss 曲线看着不错」。
+      items:
+        - name: training-sft
+          repo: https://github.com/xiciyang/training-sft
+          meta: BSD-3-Clause · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: LoRA 监督微调；数据准备、训练、合并、验收、回退各自留下哈希链与机器可读报告。判据：数据 / 训练 / 合并 / 验收 / 回退哈希链；失败：任一阶段验收不成立即回退。
+          install: dsh plugin add github:xiciyang/training-sft
+        - name: training-rl
+          repo: https://github.com/xiciyang/training-rl
+          meta: BSD-3-Clause · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 强化学习微调，奖励适配器可替换；对收益真实、KL 未失控、单一判据实现分别取证。判据：收益真实 + KL 未失控 + 单一判据实现；失败：奖励或 KL 不成立即回退。
+          install: dsh plugin add github:xiciyang/training-rl
+        - name: training-qat
+          repo: https://github.com/xiciyang/training-qat
+          meta: BSD-3-Clause · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 量化感知训练；产出的 checkpoint 能被量化流程直接消费，并拒绝把「看起来没掉点」当成验收通过。判据：checkpoint 可被量化流程消费 + 拒收假通过；失败：量化消费或精度门禁不成立即回退。
+          install: dsh plugin add github:xiciyang/training-qat
+        - name: training-pretrain
+          repo: https://github.com/xiciyang/training-pretrain
+          meta: BSD-3-Clause · DSH 插件 · 稳定 · 验证于 2026-10-20
+          line: 继续预训练；语料切成确定性分片，并对权重真的变了、格式没有崩两件事分别取证。判据：权重真的变了 + 格式没有崩；失败：任一项不成立即回退。
+          install: dsh plugin add github:xiciyang/training-pretrain
+  - id: foundations
+    type: os-group
+    data:
+      title: 判定与测量
+      note: 一个零依赖的判定原语库，管的是更前面一件事：这个数字到底成不成立。
+      items:
+        - name: ai-infra-core
+          repo: https://github.com/xiciyang/ai-infra-core
+          meta: BSD-3-Clause · 源码库 · 稳定 · 验证于 2026-10-20
+          line: 七个零依赖原语：测量有效性、无泄漏切分、审计链、沙箱探针；证明不成立时报错，不返回数字。判据：测量有效性 / 无泄漏切分 / 审计链可复算；失败：证明不成立时抛错，不返回数字。
+          install: git clone https://github.com/xiciyang/ai-infra-core.git

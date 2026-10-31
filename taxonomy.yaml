@@ -1,0 +1,75 @@
+# Taxonomy is versioned with the registry. IDs are stable; adding is additive.
+# Renaming an ID is a breaking change and needs an ADR + migration script.
+schema: 1
+
+# Coarse display groups. Categories map into one group so the site can render
+# three readable sections without hard-coding category names.
+groups:
+  - id: inference
+    title: 推理交付
+    order: 10
+    note: 从把模型装起来，到量化、调优、排障 —— 四步各一件，每件都守着同一条底线：数字要成立。
+  - id: training
+    title: 训练
+    order: 20
+    note: 真实 GPU 上的四段训练。每段都要求可被证伪的证据，而不是「loss 曲线看着不错」。
+  - id: foundations
+    title: 判定与测量
+    order: 30
+    note: 一个零依赖的判定原语库，管的是更前面一件事：这个数字到底成不成立。
+
+categories:
+  - id: serving
+    group: inference
+    title: 推理服务
+    order: 10
+  - id: quantization
+    group: inference
+    title: 量化
+    order: 20
+  - id: tuning
+    group: inference
+    title: 调优
+    order: 30
+  - id: diagnosis
+    group: inference
+    title: 排障
+    order: 40
+  - id: training
+    group: training
+    title: 训练
+    order: 10
+  - id: primitives
+    group: foundations
+    title: 判定原语
+    order: 10
+
+# Lifecycle stages. `stages` on an entry is an array because one tool often
+# covers deploy + verify + rollback.
+stages:
+  - id: probe
+    title: 探测
+  - id: deploy
+    title: 部署
+  - id: quantize
+    title: 量化
+  - id: tune
+    title: 调优
+  - id: train
+    title: 训练
+  - id: diagnose
+    title: 诊断
+  - id: verify
+    title: 验收
+  - id: rollback
+    title: 回退
+  - id: observe
+    title: 观测
+
+statuses:
+  - id: experimental
+    title: 实验
+  - id: stable
+    title: 稳定
+  - id: deprecated
+    title: 已弃用

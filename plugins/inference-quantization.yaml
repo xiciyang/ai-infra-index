@@ -1,0 +1,27 @@
+schema: 1
+id: inference-quantization
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/inference-quantization
+package: "@xiciyang/inference-quantization"
+summary: 在容器里做 PTQ（默认 AWQ + INT4），精度退化与真实吞吐是两道独立验收，通过才标记 verified。
+category: quantization
+stages: [quantize, verify, rollback]
+status: stable
+license: MIT
+install: "dsh plugin --profile <name> add github:xiciyang/inference-quantization"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20.11.0"
+  os: [linux]
+  backends: [vllm]
+  requires: [gpu, docker, network]
+evidence:
+  proves: 精度退化与真实吞吐两道独立验收
+  fails: 按精度档位降级，不把「看起来没掉点」当通过
+  url: "https://github.com/xiciyang/inference-quantization#三道硬门禁"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

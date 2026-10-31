@@ -1,0 +1,27 @@
+schema: 1
+id: inference-diagnose
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/inference-diagnose
+package: "@xiciyang/inference-diagnose"
+summary: 生成脱敏采集脚本 → 离线解析 → 给出带反证条件的原因排序；修不好时只补采缺失的探针。
+category: diagnosis
+stages: [diagnose, verify]
+status: stable
+license: BSD-3-Clause
+install: "git clone https://github.com/xiciyang/inference-diagnose.git && cd inference-diagnose && bash scripts/build.sh && dsh plugin --profile <name> add ."
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [vllm]
+  requires: [docker]
+evidence:
+  proves: 带反证条件的原因排序
+  fails: 只补采缺失的探针，不把整轮证据重跑一遍
+  url: "https://github.com/xiciyang/inference-diagnose#兼容与门禁"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

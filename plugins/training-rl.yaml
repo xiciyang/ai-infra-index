@@ -1,0 +1,28 @@
+schema: 1
+id: training-rl
+kind: plugin
+collection: ai-infra
+repo: https://github.com/xiciyang/training-rl
+package: "@xiciyang/training-rl"
+summary: 强化学习微调，奖励适配器可替换；对收益真实、KL 未失控、单一判据实现分别取证。
+category: training
+stages: [train, verify, rollback]
+order: 20
+status: stable
+license: BSD-3-Clause
+install: "dsh plugin add github:xiciyang/training-rl"
+compat:
+  dsh: ">=0.2.0 <0.3.0"
+  node: ">=20"
+  os: [linux]
+  backends: [transformers, trl, accelerate]
+  requires: [gpu, docker]
+evidence:
+  proves: 收益真实 + KL 未失控 + 单一判据实现
+  fails: 奖励或 KL 不成立即回退
+  url: "https://github.com/xiciyang/training-rl#测试"
+  verified_at: "2026-10-20"
+  verified_by: xiciyang
+maintainers: [xiciyang]
+superseded_by: null
+aliases: []

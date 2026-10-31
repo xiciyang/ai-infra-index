@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 收录标准
+    url: https://github.com/xiciyang/ai-infra-index/blob/main/docs/inclusion.md
+    about: 先看范围与五条硬规则，再开提案。
+  - name: 数据契约
+    url: https://github.com/xiciyang/ai-infra-index/blob/main/docs/contract.md
+    about: 字段、安装、证据、状态的约定。

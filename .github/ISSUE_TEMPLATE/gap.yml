@@ -1,0 +1,40 @@
+name: "Gap / 已知缺口"
+description: "公开的、可被认领的能力缺口（脱敏）"
+title: "[gap] "
+labels: ["gap"]
+body:
+  - type: input
+    id: area
+    attributes:
+      label: 位置
+      placeholder: "inference-serving / 缺 vLLM 以外的后端适配"
+    validations:
+      required: true
+  - type: textarea
+    id: missing
+    attributes:
+      label: 缺什么
+      description: 现在做不到什么？影响谁？
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: 当前绕法
+      description: 没有就写「无」。
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: 怎样算补上
+      description: 可判定的完成条件。
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: 隐私
+      options:
+        - label: 不含客户名、合同、内网地址或私有数据
+          required: true
